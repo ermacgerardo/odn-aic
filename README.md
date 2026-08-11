@@ -45,5 +45,24 @@ Como alternativa a `config.php`, configura las variables de entorno `OPENAI_API_
 
 ## GitHub Pages
 
-GitHub Pages solo sirve archivos estáticos y no ejecuta PHP. Para utilizar el botón **Actualizar**, publica estos archivos en un hosting PHP/cPanel o sustituye `api/openai.php` por una función serverless equivalente.
+El repositorio incluye dos flujos de GitHub Actions:
 
+- `deploy-pages.yml`: publica `index.html` y `data/latest.json` en GitHub Pages.
+- `update-fuel-data.yml`: ejecución manual que consulta OpenAI, actualiza `data/latest.json` y publica nuevamente el sitio.
+
+### Activar Pages
+
+1. Abre **Settings → Pages** en el repositorio.
+2. En **Build and deployment → Source**, selecciona **GitHub Actions**.
+3. Ejecuta nuevamente la acción **Deploy ODN to GitHub Pages** si no comienza automáticamente.
+
+GitHub Pages no ejecuta PHP. En Pages, el botón **Actualizar** comprueba el último archivo JSON publicado; para buscar semanas nuevas, ejecuta manualmente la acción **Update fuel data with OpenAI**.
+
+### Configurar OpenAI para la acción
+
+1. Abre **Settings → Secrets and variables → Actions**.
+2. Crea un secret llamado `OPENAI_API_KEY` con la API key del proyecto.
+3. Opcionalmente crea una variable `OPENAI_MODEL`; si se omite, se utiliza `gpt-5.5`.
+4. Abre **Actions → Update fuel data with OpenAI → Run workflow**.
+
+La acción no tiene programación recurrente: solo consume la API cuando se ejecuta manualmente.
