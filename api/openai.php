@@ -100,6 +100,7 @@ $requestBody = [
         'external_web_access' => true,
     ]],
     'tool_choice' => 'required',
+    'include' => ['web_search_call.action.sources'],
     'input' => $prompt,
     'max_output_tokens' => 1200,
     'store' => false,
@@ -143,6 +144,18 @@ if ($httpStatus < 200 || $httpStatus >= 300) {
 $textParts = [];
 $sources = [];
 foreach (($response['output'] ?? []) as $item) {
+    if (($item['type'] ?? '') === 'web_search_call') {
+        foreach (($item['action']['sources'] ?? []) as $source) {
+            $url = filter_var($source['url'] ?? '', FILTER_VALIDATE_URL);
+            if ($url !== false) {
+                $sources[$url] = [
+                    'url' => $url,
+                    'title' => trim((string)($source['title'] ?? 'Fuente consultada')),
+                ];
+            }
+        }
+        continue;
+    }
     if (($item['type'] ?? '') !== 'message') {
         continue;
     }
@@ -179,4 +192,3 @@ respond(200, [
     'sources' => array_values($sources),
     'request_id' => (string)($response['id'] ?? ''),
 ]);
-
