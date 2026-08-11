@@ -1,6 +1,37 @@
 {
-  "rows": [],
-  "sources": [],
-  "updated_at": null
+  "rows": [
+    {"fecha": "04 May 2026", "anio": "2026", "sup": 140.85, "reg": 129.32, "die": 141.67},
+    {"fecha": "11 May 2026", "anio": "2026", "sup": 142.11, "reg": 130.82, "die": 138.89},
+    {"fecha": "18 May 2026", "anio": "2026", "sup": 144.94, "reg": 132.73, "die": 138.53},
+    {"fecha": "25 May 2026", "anio": "2026", "sup": 147.03, "reg": 134.63, "die": 138.92},
+    {"fecha": "01 Jun 2026", "anio": "2026", "sup": 145.61, "reg": 134.85, "die": 137.28},
+    {"fecha": "08 Jun 2026", "anio": "2026", "sup": 141.98, "reg": 131.40, "die": 134.17},
+    {"fecha": "15 Jun 2026", "anio": "2026", "sup": 139.53, "reg": 129.13, "die": 131.82},
+    {"fecha": "22 Jun 2026", "anio": "2026", "sup": 135.22, "reg": 125.03, "die": 127.05},
+    {"fecha": "29 Jun 2026", "anio": "2026", "sup": 132.30, "reg": 122.35, "die": 123.22},
+    {"fecha": "06 Jul 2026", "anio": "2026", "sup": 131.39, "reg": 121.75, "die": 120.75},
+    {"fecha": "13 Jul 2026", "anio": "2026", "sup": 131.15, "reg": 121.70, "die": 119.53},
+    {"fecha": "20 Jul 2026", "anio": "2026", "sup": 131.84, "reg": 122.03, "die": 120.59},
+    {"fecha": "27 Jul 2026", "anio": "2026", "sup": 135.16, "reg": 123.73, "die": 124.26},
+    {"fecha": "03 Ago 2026", "anio": "2026", "sup": 138.41, "reg": 126.07, "die": 129.45},
+    {"fecha": "10 Ago 2026", "anio": "2026", "sup": 138.83, "reg": 127.42, "die": 134.25}
+  ],
+  "sources": [
+    {"title": "SEN · 04 May 2026", "url": "https://sen.hn/wp-content/uploads/2026/05/Precios-Combustibles-202605s1-scaled.jpg"},
+    {"title": "SEN · 11 May 2026", "url": "https://sen.hn/wp-content/uploads/2026/05/Precios-Combustibles-202605s2-scaled.jpg"},
+    {"title": "SEN · 18 May 2026", "url": "https://sen.hn/wp-content/uploads/2026/05/Precios-Combustibles-202605s3-scaled.jpg"},
+    {"title": "SEN · 25 May 2026", "url": "https://sen.hn/wp-content/uploads/2026/05/Precios-Combustibles-202605s4-scaled.jpg"},
+    {"title": "SEN · 01 Jun 2026", "url": "https://sen.hn/wp-content/uploads/2026/06/Precios-Combustibles-202606s1.jpeg"},
+    {"title": "SEN · 08 Jun 2026", "url": "https://sen.hn/wp-content/uploads/2026/06/Precios-Combustibles-202606s2.jpg"},
+    {"title": "SEN · 15 Jun 2026", "url": "https://sen.hn/wp-content/uploads/2026/06/Precios-Combustibles-202606s3.jpg"},
+    {"title": "SEN · 22 Jun 2026", "url": "https://sen.hn/wp-content/uploads/2026/06/Precios-Combustibles-202606s4.jpg"},
+    {"title": "SEN · 29 Jun 2026", "url": "https://sen.hn/wp-content/uploads/2026/07/Precios-Combustibles-202606s5-scaled.jpg"},
+    {"title": "SEN · 06 Jul 2026", "url": "https://sen.hn/wp-content/uploads/2026/07/Precios-Combustibles-202607s1-scaled.jpg"},
+    {"title": "SEN · 13 Jul 2026", "url": "https://sen.hn/wp-content/uploads/2026/07/Precios-Combustibles-202607s2-scaled.jpg"},
+    {"title": "SEN · 20 Jul 2026", "url": "https://sen.hn/wp-content/uploads/2026/07/Precios-Combustibles-202607s3-scaled.jpg"},
+    {"title": "SEN · 27 Jul 2026", "url": "https://sen.hn/wp-content/uploads/2026/08/Precios-Combustibles-202607s4-scaled.jpg"},
+    {"title": "SEN · 03 Ago 2026", "url": "https://sen.hn/wp-content/uploads/2026/08/Precios-Combustibles-202608s1.jpg"},
+    {"title": "SEN · 10 Ago 2026", "url": "https://sen.hn/wp-content/uploads/2026/08/Precios-Combustibles-202608s2.jpg"}
+  ],
+  "updated_at": "2026-08-11T20:50:00-06:00"
 }
-
