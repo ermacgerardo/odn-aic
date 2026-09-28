@@ -3628,13 +3628,24 @@ async function actualizarDatos(){
     newRows.forEach(r=>{
       if(r.fecha && !existingDates.has(r.fecha) && r.sup && r.reg && r.die){
         BOMB.push([r.fecha, r.anio||'2026', parseFloat(r.sup), parseFloat(r.reg), parseFloat(r.die)]);
-        existingDates.add(r.fecha);
-        added++;
+        existingDates.add(r.fecha);        added++;
       }
     });
 
+
     if(added === 0){
-      setUpdateStatus(`✅ Datos al día. Última semana: <strong>${BOMB[BOMB.length-1][0]}</strong>.`, sources);
+      const currentLastDate = BOMB[BOMB.length-1][0];
+      window._dlLastDate = currentLastDate;
+      const activeYrBtn = document.querySelector('[id^="by-"].on-y');
+      const yrCode = activeYrBtn ? activeYrBtn.id.replace('by-','') : 'all';
+      filterBomb(yrCode==='all'?'all':yrCode, activeYrBtn?activeYrBtn.id:'by-all');
+      refreshGovChart();
+      refreshAnexosTable();
+      recalcStats();
+      document.querySelector('.subtitle').textContent =
+        'Precio WTI (referencia internacional) · Gasolina Superior · Regular · Diésel · L/galón en bomba · Enero 2022 – ' + currentLastDate;
+      btn.title = 'Última semana: ' + currentLastDate + ' · Clic para buscar datos más recientes.';
+      setUpdateStatus(`✅ Datos al día. Última semana: <strong>${currentLastDate}</strong>.`, sources);
       btn.textContent = '🔄 Actualizar'; btn.disabled = false;
       return;
     }
@@ -4158,7 +4169,7 @@ function updateBombSubtitle(){
                 : 'Tegucigalpa';
   const activeYrBtn = document.querySelector('[id^="by-"].on-y');
   const yr = activeYrBtn ? activeYrBtn.id.replace('by-','') : 'all';
-  const yrStr = yr==='all' ? 'enero 2022 – abr 2026' : 'año 20'+yr;
+  const yrStr = yr==='all' ? 'enero 2022 – ' + BOMB[BOMB.length-1][0] : 'año 20'+yr;
   const subEl = document.querySelector('#bombBox .chart-period');
   if(subEl) subEl.textContent = cityStr + ' (L/galón) · Período de observación: ' + yrStr;
 }
