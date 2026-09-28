@@ -1,4 +1,13 @@
 {
+  "meta": {
+    "coverage_start": "03 Ene 2022",
+    "latest_week": "21 Sep 2026",
+    "location": "Tegucigalpa",
+    "units": "L/galón",
+    "regular_diesel_subsidy_pct": 50,
+    "policy_note": "La estructura publicada por la SEN incluye el apoyo temporal vigente para gasolina regular y diésel.",
+    "wti_last_month": "Abr 2026"
+  },
   "rows": [
     {
       "fecha": "04 May 2026",
