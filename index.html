@@ -4413,6 +4413,11 @@ initGovChart();
 <script>
 document.addEventListener('DOMContentLoaded', function(){
   if(typeof showPolTab === 'function') showPolTab('xio');
+  // GitHub Pages sirve los datos actualizados desde el JSON estático.
+  // Cárgalos al abrir el sitio para que no sea necesario pulsar el botón.
+  if(location.hostname.endsWith('.github.io') && typeof actualizarDatos === 'function'){
+    actualizarDatos();
+  }
 });
 </script>
 </body>
