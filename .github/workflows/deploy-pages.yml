@@ -28,6 +28,7 @@ jobs:
         run: |
           mkdir -p _site/data
           cp index.html _site/index.html
+          cp latest-loader.js _site/latest-loader.js
           cp data/latest.json _site/data/latest.json
           touch _site/.nojekyll
 
@@ -42,4 +43,3 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
-
