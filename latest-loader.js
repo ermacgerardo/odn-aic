@@ -87,6 +87,37 @@
     BOMB.splice(0,BOMB.length,...[...byDate.values()].sort((a,b)=>dateValue(a[0])-dateValue(b[0])));
   }
 
+  function mergeWti(wti){
+    if(!wti||!Array.isArray(wti.rows)||!wti.rows.length) return;
+    const byLabel=new Map(wtiLabels.map((label,index)=>[label,Number(wtiPrices[index])]));
+    wti.rows.forEach(row=>{
+      const value=Number(row.value);
+      if(row.label&&Number.isFinite(value)) byLabel.set(row.label,value);
+    });
+    const sorted=[...byLabel.entries()].sort((a,b)=>{
+      const [am,ay]=a[0].split(' '),[bm,by]=b[0].split(' ');
+      return (Number(ay)-Number(by))||((MONTHS[am]??0)-(MONTHS[bm]??0));
+    });
+    wtiLabels.splice(0,wtiLabels.length,...sorted.map(([label])=>label));
+    wtiPrices.splice(0,wtiPrices.length,...sorted.map(([,value])=>value));
+    wti.rows.forEach(row=>{
+      const match=String(row.period||'').match(/^(\w{3})\s+(\d{4})$/);
+      if(match&&Number.isFinite(Number(row.value))) WTI_M[`${match[2]}-${String((MONTHS[match[1]]??0)+1).padStart(2,'0')}`]=Number(row.value);
+    });
+    WTI_YEAR_RANGES.all.e=wtiLabels.length;
+    WTI_YEAR_RANGES['26'].e=wtiLabels.length;
+    window._latestWti=wti.rows.at(-1);
+    wtiChart.data.labels=wtiLabels;
+    wtiChart.data.datasets[0].data=wtiPrices;
+    wtiChart.data.datasets[0].pointRadius=wtiPrices.map((_,i)=>wtiAnns[i]?7:2.5);
+    wtiChart.data.datasets[0].pointBackgroundColor=wtiPrices.map((_,i)=>wtiAnns[i]?'#fff':'rgba(210,153,34,.8)');
+    wtiChart.data.datasets[0].pointBorderColor=wtiPrices.map((_,i)=>wtiAnns[i]?'#d29922':'#ffffff');
+    wtiChart.options.scales.x.max=wtiLabels.length-1;
+    wtiChart.options.scales.y.min=Math.floor(Math.min(...wtiPrices)-5);
+    wtiChart.options.scales.y.max=Math.ceil(Math.max(...wtiPrices)+5);
+    wtiChart.update('none');
+  }
+
   function updateText(data){
     const meta=data.meta||{};
     const last=BOMB.at(-1),prev=BOMB.at(-2)||last;
@@ -94,7 +125,9 @@
     const lastDate=last[0],subsidy=Number(meta.regular_diesel_subsidy_pct)||0;
     const weekly={sup:last[2]-prev[2],reg:last[3]-prev[3],die:last[4]-prev[4]};
     const annual={sup:last[2]-yearStart[2],reg:last[3]-yearStart[3],die:last[4]-yearStart[4]};
-    const wtiCutoff=meta.wti_last_month||'Abr 2026';
+    const wtiCutoff=meta.wti_last_month||window._latestWti?.period||wtiLabels.at(-1);
+    const wtiLatest=window._latestWti||{};
+    const wtiValue=Number(wtiLatest.value);
     window._dlLastDate=lastDate;
     window._latestMeta=meta;
     BOMB_EVENTS[lastDate]=`📍 Último dato SEN: Superior L ${last[2].toFixed(2)}`;
@@ -108,7 +141,19 @@
     const wtiPeriod=document.querySelector('#wtiBox .chart-period');
     if(wtiPeriod) wtiPeriod.textContent=`USD/barril · Promedio mensual · Ene 2022 – ${wtiCutoff} (fecha de corte propia)`;
     const wtiSource=document.querySelector('#wtiBox .chart-source')||[...document.querySelectorAll('#wtiBox div')].find(el=>el.textContent.trim().startsWith('Fuente:'));
-    if(wtiSource) wtiSource.innerHTML=`<strong>Fuente:</strong> EIA / FRED (DCOILWTICO) · Promedios mensuales enero 2022 – ${wtiCutoff}. Esta serie tiene una fecha de corte distinta a los precios semanales SEN.`;
+    if(wtiSource) wtiSource.innerHTML=`<strong>Fuente:</strong> EIA / FRED (${data.wti?.series||'MCOILWTICO'}) · Promedios mensuales enero 2022 – ${wtiCutoff}. Esta serie tiene una fecha de corte distinta a los precios semanales SEN.`;
+    if(byId('wti-comp-current-label')) byId('wti-comp-current-label').innerHTML=`<span style="display:inline-block;width:28px;height:3px;background:#1d4ed8;border-radius:2px"></span><strong style="color:#1d4ed8">2026</strong> · Ene–${wtiLabels.at(-1).split(' ')[0]}`;
+    [byId('wti-narrative-source'),byId('wti-gov-source')].filter(Boolean).forEach(el=>{
+      el.innerHTML=`<strong>Fuente:</strong> U.S. Energy Information Administration (EIA) vía FRED · Serie ${data.wti?.series||'MCOILWTICO'} · Promedios mensuales enero 2022 – ${wtiCutoff}.`;
+    });
+
+    const wtiStats=document.querySelectorAll('#tab-graficos .stats .sc')[0]?.children;
+    if(wtiStats&&Number.isFinite(wtiValue)){
+      wtiStats[0].textContent=`WTI · ${wtiCutoff}`;
+      wtiStats[1].textContent=`${wtiValue.toFixed(2)}/b`;
+      wtiStats[2].textContent='Promedio mensual oficial EIA/FRED';
+      wtiStats[3].innerHTML=`<strong>🛢️ WTI · ${wtiCutoff}</strong>Promedio mensual de <strong>${wtiValue.toFixed(2)} por barril</strong>. Fuente: EIA/FRED, serie ${data.wti?.series||'MCOILWTICO'}; dato cargado desde data/latest.json.`;
+    }
 
     const asfStart=BOMB.findIndex(r=>r[0]==='26 Ene 2026');
     if(byId('gov-latest-hint')) byId('gov-latest-hint').textContent=`💡 Semana 0 = toma de posesión. Último dato SEN: ${lastDate} · Gobierno Asfura: semana ${asfStart>=0?BOMB.length-1-asfStart:'—'}.`;
@@ -145,7 +190,7 @@
     }
     if(byId('policy-current-note')) byId('policy-current-note').textContent=`📅 Vigencia desde ${lastDate} · Fuente: SEN · Variación acumulada desde ${yearStart[0]} · data/latest.json.`;
 
-    if(byId('method-wti')) byId('method-wti').innerHTML=`Los precios WTI provienen de la <strong>EIA</strong> mediante FRED (DCOILWTICO). La serie disponible cubre enero 2022 – ${wtiCutoff}; su fecha de corte es independiente de los precios semanales SEN, actualizados hasta ${lastDate}.`;
+    if(byId('method-wti')) byId('method-wti').innerHTML=`Los precios WTI provienen de la <strong>EIA</strong> mediante FRED (${data.wti?.series||'MCOILWTICO'}). La serie disponible cubre enero 2022 – ${wtiCutoff}; su fecha de corte es independiente de los precios semanales SEN, actualizados hasta ${lastDate}.`;
     if(byId('method-processing')) byId('method-processing').innerHTML=`Se procesan <strong>${BOMB.length} semanas</strong> entre ${meta.coverage_start||BOMB[0][0]} y ${lastDate}. Los datos vigentes se leen de <code>data/latest.json</code>; gráficos, tablas, variaciones y textos se recalculan al cargar la página.`;
     if(byId('method-limitations')) byId('method-limitations').innerHTML=`Los precios en bomba están actualizados hasta <strong>${lastDate}</strong> y proceden de estructuras oficiales SEN. WTI conserva su fecha de corte propia (${wtiCutoff}). Las estimaciones macroeconómicas se identifican como proyecciones.`;
 
@@ -178,6 +223,7 @@
       const data=await response.json();
       if(!Array.isArray(data.rows)||!data.rows.length) throw new Error('latest.json no contiene filas');
       mergeRows(data.rows);
+      mergeWti(data.wti);
       refresh(data);
     }catch(error){
       console.error('No se pudo cargar data/latest.json',error);
