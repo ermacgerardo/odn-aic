@@ -494,16 +494,7 @@ tr:last-child td{border-bottom:none}
   <div class="tab" onclick="showTab('politicas')">📜 Políticas implementadas</div>
   <div class="tab" onclick="showTab('glosario')">📖 Glosario</div>
   <div class="tab" onclick="showTab('anexos')">📁 Anexos</div>
-  <button id="btn-actualizar" onclick="actualizarDatos()"
-    title="Última semana: 27 Abr 2026 · Haz clic para buscar precios más recientes."
-    style="margin-left:6px;align-self:center;background:rgba(45,164,78,.12);color:#2da44e;border:1px solid rgba(45,164,78,.35);border-radius:999px;padding:4px 16px;font-size:.70rem;font-weight:600;cursor:pointer;letter-spacing:.04em;transition:all .2s;white-space:nowrap"
-    onmouseover="this.style.background='#2da44e';this.style.color='#fff'"
-    onmouseout="this.style.background='rgba(45,164,78,.12)';this.style.color='#2da44e'">
-    🔄 Actualizar
-  </button>
-  <span id="update-status" role="status" aria-live="polite"
-    style="display:none;flex-basis:100%;padding:7px 10px;border-radius:7px;background:#ffffff;border:1px solid #d0d7de;color:#57606a;font-size:.70rem;line-height:1.5"></span>
-</div>
+  </div>
 
 <!-- ── BOTÓN PRECIOS HOY ── -->
 <div style="margin-bottom:14px">
@@ -4431,5 +4422,6 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 });
 </script>
+<script src="latest-loader.js"></script>
 </body>
 </html>
