@@ -89,24 +89,25 @@
 
   function mergeWti(wti){
     if(!wti||!Array.isArray(wti.rows)||!wti.rows.length) return;
-    const byLabel=new Map(wtiLabels.map((label,index)=>[label,Number(wtiPrices[index])]));
-    wti.rows.forEach(row=>{
-      const value=Number(row.value);
-      if(row.label&&Number.isFinite(value)) byLabel.set(row.label,value);
+    const normalized=wti.rows.map(row=>{
+      const match=String(row.period||row.label||'').match(/^(\w{3})\s+(\d{2}|\d{4})$/);
+      if(!match||!(match[1] in MONTHS)||!Number.isFinite(Number(row.value))) return null;
+      const year=match[2].length===2?'20'+match[2]:match[2];
+      return {label:match[1]+' '+year.slice(-2),period:match[1]+' '+year,
+        key:year+'-'+String(MONTHS[match[1]]+1).padStart(2,'0'),value:Number(row.value)};
+    }).filter(Boolean).sort((a,b)=>a.key.localeCompare(b.key));
+    if(!normalized.length) return;
+    const sorted=[...new Map(normalized.map(row=>[row.key,row])).values()];
+    wtiLabels.splice(0,wtiLabels.length,...sorted.map(row=>row.label));
+    wtiPrices.splice(0,wtiPrices.length,...sorted.map(row=>row.value));
+    Object.keys(WTI_M).forEach(key=>delete WTI_M[key]);
+    sorted.forEach(row=>{WTI_M[row.key]=row.value;});
+    WTI_YEAR_RANGES.all={s:0,e:sorted.length};
+    ['22','23','24','25','26'].forEach(year=>{
+      const s=sorted.findIndex(row=>row.key.startsWith('20'+year+'-'));
+      WTI_YEAR_RANGES[year]={s:s<0?0:s,e:s<0?0:s+sorted.filter(row=>row.key.startsWith('20'+year+'-')).length};
     });
-    const sorted=[...byLabel.entries()].sort((a,b)=>{
-      const [am,ay]=a[0].split(' '),[bm,by]=b[0].split(' ');
-      return (Number(ay)-Number(by))||((MONTHS[am]??0)-(MONTHS[bm]??0));
-    });
-    wtiLabels.splice(0,wtiLabels.length,...sorted.map(([label])=>label));
-    wtiPrices.splice(0,wtiPrices.length,...sorted.map(([,value])=>value));
-    wti.rows.forEach(row=>{
-      const match=String(row.period||'').match(/^(\w{3})\s+(\d{4})$/);
-      if(match&&Number.isFinite(Number(row.value))) WTI_M[`${match[2]}-${String((MONTHS[match[1]]??0)+1).padStart(2,'0')}`]=Number(row.value);
-    });
-    WTI_YEAR_RANGES.all.e=wtiLabels.length;
-    WTI_YEAR_RANGES['26'].e=wtiLabels.length;
-    window._latestWti=wti.rows.at(-1);
+    window._latestWti=sorted.at(-1);
     wtiChart.data.labels=wtiLabels;
     wtiChart.data.datasets[0].data=wtiPrices;
     wtiChart.data.datasets[0].pointRadius=wtiPrices.map((_,i)=>wtiAnns[i]?7:2.5);
@@ -116,6 +117,7 @@
     wtiChart.options.scales.y.min=Math.floor(Math.min(...wtiPrices)-5);
     wtiChart.options.scales.y.max=Math.ceil(Math.max(...wtiPrices)+5);
     wtiChart.update('none');
+    if(typeof filterWTI==='function') filterWTI(wtiYearFilter);
   }
 
   function updateText(data){
@@ -125,7 +127,7 @@
     const lastDate=last[0],subsidy=Number(meta.regular_diesel_subsidy_pct)||0;
     const weekly={sup:last[2]-prev[2],reg:last[3]-prev[3],die:last[4]-prev[4]};
     const annual={sup:last[2]-yearStart[2],reg:last[3]-yearStart[3],die:last[4]-yearStart[4]};
-    const wtiCutoff=meta.wti_last_month||window._latestWti?.period||wtiLabels.at(-1);
+    const wtiCutoff=window._latestWti?.period||meta.wti_last_month||wtiLabels.at(-1);
     const wtiLatest=window._latestWti||{};
     const wtiValue=Number(wtiLatest.value);
     window._dlLastDate=lastDate;
@@ -210,7 +212,7 @@
     bombChart.data.datasets[0].pointRadius=bombChart.data.labels.map(label=>BOMB_EVENTS[label]?5.5:0);
     bombChart.update();
     if(typeof refreshGovChart==='function') refreshGovChart();
-    if(typeof buildAnxTable==='function') buildAnxTable(BOMB,window._anxYear||'all');
+    if(typeof buildAnxTable==='function') buildAnxTable(BOMB,window._anxYear||null);
     else if(typeof buildTable==='function') buildTable(BOMB);
     updateText(data);
   }
