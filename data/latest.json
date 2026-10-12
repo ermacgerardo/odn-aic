@@ -6,7 +6,7 @@
     "units": "L/galón",
     "regular_diesel_subsidy_pct": 50,
     "policy_note": "La estructura publicada por la SEN incluye el apoyo temporal vigente para gasolina regular y diésel.",
-    "wti_last_month": "Abr 2026"
+    "wti_last_month": "Sep 2026"
   },
   "rows": [
     {
@@ -243,5 +243,299 @@
       "url": "https://sen.hn/wp-content/uploads/2026/09/Precios-Combustibles-202609s3-scaled.jpg"
     }
   ],
-  "updated_at": "2026-09-28T15:14:00-06:00"
+  "updated_at": "2026-10-12T13:58:00-06:00",
+  "wti": {
+    "series": "MCOILWTICO",
+    "source": "https://fred.stlouisfed.org/series/MCOILWTICO",
+    "frequency": "monthly",
+    "units": "USD/barril",
+    "updated_at": "2026-10-07",
+    "rows": [
+      {
+        "label": "Ene 22",
+        "period": "Ene 2022",
+        "value": 83.22
+      },
+      {
+        "label": "Feb 22",
+        "period": "Feb 2022",
+        "value": 91.64
+      },
+      {
+        "label": "Mar 22",
+        "period": "Mar 2022",
+        "value": 108.5
+      },
+      {
+        "label": "Abr 22",
+        "period": "Abr 2022",
+        "value": 101.78
+      },
+      {
+        "label": "May 22",
+        "period": "May 2022",
+        "value": 109.55
+      },
+      {
+        "label": "Jun 22",
+        "period": "Jun 2022",
+        "value": 114.84
+      },
+      {
+        "label": "Jul 22",
+        "period": "Jul 2022",
+        "value": 101.62
+      },
+      {
+        "label": "Ago 22",
+        "period": "Ago 2022",
+        "value": 93.67
+      },
+      {
+        "label": "Sep 22",
+        "period": "Sep 2022",
+        "value": 84.26
+      },
+      {
+        "label": "Oct 22",
+        "period": "Oct 2022",
+        "value": 87.55
+      },
+      {
+        "label": "Nov 22",
+        "period": "Nov 2022",
+        "value": 84.37
+      },
+      {
+        "label": "Dic 22",
+        "period": "Dic 2022",
+        "value": 76.44
+      },
+      {
+        "label": "Ene 23",
+        "period": "Ene 2023",
+        "value": 78.12
+      },
+      {
+        "label": "Feb 23",
+        "period": "Feb 2023",
+        "value": 76.83
+      },
+      {
+        "label": "Mar 23",
+        "period": "Mar 2023",
+        "value": 73.28
+      },
+      {
+        "label": "Abr 23",
+        "period": "Abr 2023",
+        "value": 79.45
+      },
+      {
+        "label": "May 23",
+        "period": "May 2023",
+        "value": 71.58
+      },
+      {
+        "label": "Jun 23",
+        "period": "Jun 2023",
+        "value": 70.25
+      },
+      {
+        "label": "Jul 23",
+        "period": "Jul 2023",
+        "value": 76.07
+      },
+      {
+        "label": "Ago 23",
+        "period": "Ago 2023",
+        "value": 81.39
+      },
+      {
+        "label": "Sep 23",
+        "period": "Sep 2023",
+        "value": 89.43
+      },
+      {
+        "label": "Oct 23",
+        "period": "Oct 2023",
+        "value": 85.64
+      },
+      {
+        "label": "Nov 23",
+        "period": "Nov 2023",
+        "value": 77.69
+      },
+      {
+        "label": "Dic 23",
+        "period": "Dic 2023",
+        "value": 71.9
+      },
+      {
+        "label": "Ene 24",
+        "period": "Ene 2024",
+        "value": 74.15
+      },
+      {
+        "label": "Feb 24",
+        "period": "Feb 2024",
+        "value": 77.25
+      },
+      {
+        "label": "Mar 24",
+        "period": "Mar 2024",
+        "value": 81.28
+      },
+      {
+        "label": "Abr 24",
+        "period": "Abr 2024",
+        "value": 85.35
+      },
+      {
+        "label": "May 24",
+        "period": "May 2024",
+        "value": 80.02
+      },
+      {
+        "label": "Jun 24",
+        "period": "Jun 2024",
+        "value": 79.77
+      },
+      {
+        "label": "Jul 24",
+        "period": "Jul 2024",
+        "value": 81.8
+      },
+      {
+        "label": "Ago 24",
+        "period": "Ago 2024",
+        "value": 76.68
+      },
+      {
+        "label": "Sep 24",
+        "period": "Sep 2024",
+        "value": 70.24
+      },
+      {
+        "label": "Oct 24",
+        "period": "Oct 2024",
+        "value": 71.99
+      },
+      {
+        "label": "Nov 24",
+        "period": "Nov 2024",
+        "value": 69.95
+      },
+      {
+        "label": "Dic 24",
+        "period": "Dic 2024",
+        "value": 70.12
+      },
+      {
+        "label": "Ene 25",
+        "period": "Ene 2025",
+        "value": 75.74
+      },
+      {
+        "label": "Feb 25",
+        "period": "Feb 2025",
+        "value": 71.53
+      },
+      {
+        "label": "Mar 25",
+        "period": "Mar 2025",
+        "value": 68.24
+      },
+      {
+        "label": "Abr 25",
+        "period": "Abr 2025",
+        "value": 63.54
+      },
+      {
+        "label": "May 25",
+        "period": "May 2025",
+        "value": 62.17
+      },
+      {
+        "label": "Jun 25",
+        "period": "Jun 2025",
+        "value": 68.17
+      },
+      {
+        "label": "Jul 25",
+        "period": "Jul 2025",
+        "value": 68.39
+      },
+      {
+        "label": "Ago 25",
+        "period": "Ago 2025",
+        "value": 64.86
+      },
+      {
+        "label": "Sep 25",
+        "period": "Sep 2025",
+        "value": 63.96
+      },
+      {
+        "label": "Oct 25",
+        "period": "Oct 2025",
+        "value": 60.89
+      },
+      {
+        "label": "Nov 25",
+        "period": "Nov 2025",
+        "value": 60.06
+      },
+      {
+        "label": "Dic 25",
+        "period": "Dic 2025",
+        "value": 57.97
+      },
+      {
+        "label": "Ene 26",
+        "period": "Ene 2026",
+        "value": 60.04
+      },
+      {
+        "label": "Feb 26",
+        "period": "Feb 2026",
+        "value": 64.51
+      },
+      {
+        "label": "Mar 26",
+        "period": "Mar 2026",
+        "value": 91.38
+      },
+      {
+        "label": "Abr 26",
+        "period": "Abr 2026",
+        "value": 100.32
+      },
+      {
+        "label": "May 26",
+        "period": "May 2026",
+        "value": 102.13
+      },
+      {
+        "label": "Jun 26",
+        "period": "Jun 2026",
+        "value": 84.81
+      },
+      {
+        "label": "Jul 26",
+        "period": "Jul 2026",
+        "value": 80.46
+      },
+      {
+        "label": "Ago 26",
+        "period": "Ago 2026",
+        "value": 83.9
+      },
+      {
+        "label": "Sep 26",
+        "period": "Sep 2026",
+        "value": 97.31
+      }
+    ]
+  }
 }
